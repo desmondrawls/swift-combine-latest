@@ -52,6 +52,7 @@ class Observable<In, Out>: Subscribable {
     private let transform: (In) -> Out
     private var shelf: [Out] = []
     
+    // PROBLEM CHILD
     static func combineLatest<In1, Out1, In2, Out2, Combined>(stream1: Observable<In1, Out1>, stream2: Observable<In2, Out2>, combine: @escaping (Out1, Out2) -> Combined) -> Observable<Combined, Combined>{
         let subscribeToBoth = {(observer: @escaping (Combined) -> Void) -> Void in
             stream1.withLatestFrom(stream: stream2, combine: combine).subscribe(observer: observer)
